@@ -14,7 +14,7 @@ export function toRna(dna) {
 
     //loop through each index of our DNA string
     for(let i = 0; i < dna.length; i++){
-        //look for the letter at that position in the DNA key.
+            //look for the letter in the DNA key.
             let pos = dnaKey.search(dna[i]);
             //if found, add its RNA translation to our RNA string
             if (pos !== -1) {
