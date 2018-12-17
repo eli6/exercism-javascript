@@ -8,13 +8,12 @@ export function solve(x, y) {
     const Middleradius = 5;
     const InnerRadius = 1;
 
-    if(x > Outerradius || y > Outerradius ){
-        return 0;
-    } else if( x <= Middleradius && y <= Middleradius ){
-        if(x <= InnerRadius && y <= InnerRadius){
-            return 10;
+    //if we are outside of the target, return 0
+    if(x <= Outerradius || y <= Outerradius ){
+        if( x <= Middleradius && y <= Middleradius ){
+            return (x <= InnerRadius && y <= InnerRadius) ? 10 : 5;
         }
-        return 5;
+        return 1;
     }
-    return 1;
+    return 0;
 }
