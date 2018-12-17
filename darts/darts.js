@@ -3,7 +3,7 @@
  * Hit in outer circle gives 10 points. Hit in the middle circle gives 5 points and hit in the inner circle, 1 point.
  * @param x X coordinate where the dart has hit.
  * @param y Y coordinate where the dart has hit.
- * @returns {?number}
+ * @returns {?number} Points earned for the hit.
  */
 export function solve(x, y) {
 
