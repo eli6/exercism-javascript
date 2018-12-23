@@ -5,9 +5,6 @@
  */
 export function toRna(dna) {
 
-    //resulting rna string
-    let rna = "";
-
     const RNA_Lookup = {
         "C" : "G",
         "G" : "C",
@@ -15,15 +12,13 @@ export function toRna(dna) {
         "T" : "A",
     };
 
-    dna.split('').map(function(dnaLetter) {
-
+    function dnaToRna(dnaLetter){
         if(RNA_Lookup[dnaLetter]!== undefined) {
-            return rna += RNA_Lookup[dnaLetter];
+            return RNA_Lookup[dnaLetter];
         } else {
             throw new Error('Invalid input DNA.');  //if not found, throw error.
         }
+    }
 
-    });
-
-    return rna;
+    return dna.split('').map(dnaToRna).join('');
 }
