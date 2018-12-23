@@ -8,21 +8,22 @@ export function toRna(dna) {
     //resulting rna string
     let rna = "";
 
-    //conversion keys
-    const dnaKey = "CGAT";
-    const rnaKey = "GCUA";
+    const RNA_Lookup = {
+        "C" : "G",
+        "G" : "C",
+        "A" : "U",
+        "T" : "A",
+    };
 
-    //loop through each index of our DNA string
-    for(let i = 0; i < dna.length; i++){
-            //look for the letter in the DNA key.
-            let pos = dnaKey.search(dna[i]);
-            //if found, add its RNA translation to our RNA string
-            if (pos !== -1) {
-                rna += rnaKey[pos];
-            } else { // if we cant find the letter in the DNA key, our string is invalid.
-                throw new Error('Invalid input DNA.');
-            }
+    dna.split('').map(function(dnaLetter) {
 
-    }
+        if(RNA_Lookup[dnaLetter]!== undefined) {
+            return rna += RNA_Lookup[dnaLetter];
+        } else {
+            throw new Error('Invalid input DNA.');  //if not found, throw error.
+        }
+
+    });
+
     return rna;
 }
