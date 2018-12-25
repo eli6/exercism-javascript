@@ -1,11 +1,10 @@
 
-let iteration = 0;
-
 class Zipper {
 
     constructor(tree){
+       // this.tree = this.root = tree;
+        //this.tree = this.root = Object.assign({}, tree);
         this.tree = this.root = JSON.parse(JSON.stringify(tree));
-        iteration += 1;
         this.parentNodes = [];
     }
 
