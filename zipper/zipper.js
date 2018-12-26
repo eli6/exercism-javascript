@@ -62,8 +62,12 @@ class Zipper {
         if(!this.thereIsAParent()){
             return null;
         }
-        this.focus = this.parentNodes.pop();
+        this.moveFocusToParent();
         return this;
+    }
+
+    moveFocusToParent(){
+        this.focus = this.parentNodes.pop();
     }
 
     thereIsAParent(){
