@@ -29,6 +29,10 @@ class Zipper {
         return this.moveFocusOneStepDownToTheRight();
     }
 
+    makeCurrentFocusAParent(){
+        this.parentNodes.push(this.focus);
+    }
+
 
     moveFocusOneStepDownToTheLeft(){
         if(Zipper.subtreeExists(this.focus.left)){
@@ -48,10 +52,6 @@ class Zipper {
 
     static subtreeExists(tree){
         return tree !== null;
-    }
-
-    makeCurrentFocusAParent(){
-        this.parentNodes.push(this.focus);
     }
 
     value(){
