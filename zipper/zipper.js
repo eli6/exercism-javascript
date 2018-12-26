@@ -2,34 +2,56 @@
 class Zipper {
 
     constructor(tree){
-       // this.tree = this.root = tree;
-        //this.tree = this.root = Object.assign({}, tree);
-        this.tree = this.root = JSON.parse(JSON.stringify(tree));
+        this.tree = this.root = Zipper.deepCopyOf(tree);
         this.parentNodes = [];
     }
 
+    static deepCopyOf(object){
+        return JSON.parse(JSON.stringify(object));
+    }
+
     static fromTree(tree) {
-       return new Zipper(tree, tree);
+       return new Zipper(tree);
     }
 
     toTree() {
-       // return this.tree;
        return this.root;
     }
 
-   //var =  bt( 1, bt(2, null, leaf(3)), leaf(4) );
-
     left(){
-        this.parentNodes.push(this.tree); //add this one to history.
-        this.tree = this.tree.left;
-        return this.tree === null ? null : this;
-
+        this.makeCurrentTreeNodeAParent();
+        return this.getTreeOneStepDownToTheLeft();
     }
 
+
     right() {
-        this.parentNodes.push(this.tree); //add this one to history.
-        this.tree = this.tree.right;
-        return this.tree === null ? null : this;
+        this.makeCurrentTreeNodeAParent();
+        return this.getTreeOneStepDownToTheRight();
+    }
+
+
+    getTreeOneStepDownToTheLeft(){
+        if(Zipper.treeExists(this.tree.left)){
+            this.tree = this.tree.left;
+            return this;
+        }
+        return null;
+    }
+
+    getTreeOneStepDownToTheRight(){
+        if(Zipper.treeExists(this.tree.right)){
+            this.tree = this.tree.right;
+            return this;
+        }
+        return null;
+    }
+
+    static treeExists(tree){
+        return tree !== null;
+    }
+
+    makeCurrentTreeNodeAParent(){
+        this.parentNodes.push(this.tree);
     }
 
     value(){
@@ -37,22 +59,21 @@ class Zipper {
     }
 
     up(){
-        if(this.parentNodes.length > 0){
-            let currentTree = this.parentNodes.pop();
-            this.tree = currentTree;
-            return this;
-        } else {
-            return null; //otherwise we dont have any higher level, we're at the top.
+        if(!this.thereIsAParent()){
+            return null;
         }
-
-    }
-
-    //todo changes original
-    setValue(newValue){ //todo null check?
-        this.tree.value = newValue;
+        this.tree = this.parentNodes.pop();
         return this;
     }
 
+    thereIsAParent(){
+        return this.parentNodes.length > 0
+    }
+
+    setValue(newValue){
+        this.tree.value = newValue;
+        return this;
+    }
 
     setLeft(branch){
         this.tree.left = branch;
