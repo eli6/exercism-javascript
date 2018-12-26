@@ -2,7 +2,7 @@
 class Zipper {
 
     constructor(tree){
-        this.tree = this.root = Zipper.deepCopyOf(tree);
+        this.focus = this.root = Zipper.deepCopyOf(tree);
         this.parentNodes = [];
     }
 
@@ -19,50 +19,50 @@ class Zipper {
     }
 
     left(){
-        this.makeCurrentTreeNodeAParent();
-        return this.getTreeOneStepDownToTheLeft();
+        this.makeCurrentFocusAParent();
+        return this.moveFocusOneStepDownToTheLeft();
     }
 
 
     right() {
-        this.makeCurrentTreeNodeAParent();
-        return this.getTreeOneStepDownToTheRight();
+        this.makeCurrentFocusAParent();
+        return this.moveFocusOneStepDownToTheRight();
     }
 
 
-    getTreeOneStepDownToTheLeft(){
-        if(Zipper.treeExists(this.tree.left)){
-            this.tree = this.tree.left;
+    moveFocusOneStepDownToTheLeft(){
+        if(Zipper.subtreeExists(this.focus.left)){
+            this.focus = this.focus.left;
             return this;
         }
         return null;
     }
 
-    getTreeOneStepDownToTheRight(){
-        if(Zipper.treeExists(this.tree.right)){
-            this.tree = this.tree.right;
+    moveFocusOneStepDownToTheRight(){
+        if(Zipper.subtreeExists(this.focus.right)){
+            this.focus = this.focus.right;
             return this;
         }
         return null;
     }
 
-    static treeExists(tree){
+    static subtreeExists(tree){
         return tree !== null;
     }
 
-    makeCurrentTreeNodeAParent(){
-        this.parentNodes.push(this.tree);
+    makeCurrentFocusAParent(){
+        this.parentNodes.push(this.focus);
     }
 
     value(){
-        return this.tree.value;
+        return this.focus.value;
     }
 
     up(){
         if(!this.thereIsAParent()){
             return null;
         }
-        this.tree = this.parentNodes.pop();
+        this.focus = this.parentNodes.pop();
         return this;
     }
 
@@ -71,17 +71,17 @@ class Zipper {
     }
 
     setValue(newValue){
-        this.tree.value = newValue;
+        this.focus.value = newValue;
         return this;
     }
 
     setLeft(branch){
-        this.tree.left = branch;
+        this.focus.left = branch;
         return this;
     }
 
     setRight(branch){
-        this.tree.right = branch;
+        this.focus.right = branch;
         return this;
     }
 }
